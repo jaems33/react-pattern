@@ -1,30 +1,48 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import PrimaryButton from './components/PrimaryButton';
 import Button from './components/Button';
 import Form from './components/Form';
 import {v4 as uuidv4} from 'uuid';
 import {isFeatureOn} from './featureToggle'
+import SignInForm from './forms/SignInForm'
 
-
+import Counter from './components/Counter'
 
 function Example(props: any): any {
   return [];
 }
 
+const LoggingHOC = (id: string, WrappedComponent: React.FunctionComponent<any>) => (props: any) => {
+  const log = () => {
+    console.log("You clicked", id);
+    props.callback();
+  }
+  
+  return <WrappedComponent onClick={() => log()} {...props} />
+}
+
+
+const TrackingHOC = (WrappedComponent: React.FunctionComponent<any>) => (props: any) => {
+  const trackProps = {
+    tracking_id: uuidv4()
+  }
+  return <WrappedComponent {...props} {...trackProps} />
+}
+
 const toggleOn = (featureName: string, ComposedComponent: any) => class HOC extends React.Component {
   render(){
-    console.log(isFeatureOn(featureName));
     return isFeatureOn(featureName) ? <ComposedComponent {...this.props} /> : null;
   }
 }
 
 const toggleOnAlt = (featureName: string, ComposedComponent: React.FunctionComponent<any>) => (props:any) => {
-    console.log(isFeatureOn(featureName));
     return isFeatureOn(featureName) ? <ComposedComponent {...props} /> : null;
 }
 
 const SomeComponent = (props: any) => <h4>Hello</h4>;
+
+const trackingId = uuidv4();
 
 function App() {
 
@@ -52,15 +70,30 @@ function App() {
 
   const Button3 = toggleOnAlt('showForm', PrimaryButton);
   const Form2 = toggleOnAlt('showForm', Form);
+  const TrackedButton = TrackingHOC(Button);
+  const button = <TrackedButton text="This button is tracked" />
 
-  console.log(<SomeComponent />)
+  const LoggedButton = LoggingHOC(trackingId, Button);
+
+
+  const [toggle, setToggle] = useState(false);
+
+  const callbackFunction = () => {
+    setToggle(!toggle);
+  }
+
   return (
     <div className="App">
       <PrimaryButton text='Primary Button' />
       <Button text='Normal Button' />
       <Form2 fields={fields} onSubmit={callback} showLabels={true} />
       <Button3 text="Optional Button" />
+      {button}
+      <h2>Light switch is {toggle ? 'on' : 'off'}</h2>
+      <LoggedButton text="This is a logged button" callback={() => callbackFunction()} />
       <Example></Example>
+      <SignInForm />
+      <Counter max={3} step={1} />
     </div>
   );
 }

@@ -3,13 +3,17 @@ import {parseClassNames} from '../utils';
 
 /* Proxy  */
 /* Spreading props on DOM elements don't add unknown HTML attributes */
-const Button: React.FunctionComponent<any> = ({className, primary, text, ...domProps}) => 
-  <button 
+const Button: React.FunctionComponent<any> = ({type = 'button', className, primary, text, callback, ...domProps}) => {
+  return (
+  <button
+    onClick={callback} 
     className={parseClassNames('button', primary && 'button--primary', className)} 
-    type="button" 
+    type={type} 
     {...domProps}>
       {text}
-  </button>
+  </button>)
+}
+  
 
 export default Button;
 
