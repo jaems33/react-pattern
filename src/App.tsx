@@ -5,14 +5,11 @@ import Button from './components/Button';
 import Form from './components/Form';
 import {v4 as uuidv4} from 'uuid';
 import {isFeatureOn} from './featureToggle'
-import SignInForm from './forms/SignInForm'
 import Todolist from './pages/TodoList';
 import NamesList from './pages/DataFetchingWithRouting/NamesList';
-import Counter from './components/Counter';
 
 import {KanbanProvider} from './pages/Kanban/KanbanContext';
-
-import Kanban from './pages/Kanban/Kanban';
+import RegistrationForm from './pages/ManagingFormState/RegistrationForm';
 
 const fields = [
   {
@@ -84,7 +81,7 @@ function App() {
   return (
     <KanbanProvider>
       <div className="App">
-        <NamesList />
+        <RegistrationForm />
         <hr />
         <Form2 fields={fields} onSubmit={callback} showLabels={true} />
         <h2>Light switch is {toggle ? 'on' : 'off'}</h2>
