@@ -7,6 +7,7 @@ import {v4 as uuidv4} from 'uuid';
 import {isFeatureOn} from './featureToggle'
 import SignInForm from './forms/SignInForm'
 import Todolist from './pages/TodoList';
+import NamesList from './pages/DataFetching/NamesList';
 import Counter from './components/Counter';
 
 import {KanbanProvider} from './pages/Kanban/KanbanContext';
@@ -83,14 +84,11 @@ function App() {
   return (
     <KanbanProvider>
       <div className="App">
-        <Kanban />
+        <NamesList />
         <hr />
         <Form2 fields={fields} onSubmit={callback} showLabels={true} />
         <h2>Light switch is {toggle ? 'on' : 'off'}</h2>
         <LoggedButton text="This is a logged button" callback={() => callbackFunction()} />
-        <SignInForm />
-        <hr />
-        <Todolist />
       </div>
     </KanbanProvider>
   );
