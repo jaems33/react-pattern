@@ -6,12 +6,30 @@ import Form from './components/Form';
 import {v4 as uuidv4} from 'uuid';
 import {isFeatureOn} from './featureToggle'
 import SignInForm from './forms/SignInForm'
+import Todolist from './pages/TodoList';
+import Counter from './components/Counter';
 
-import Counter from './components/Counter'
+import {KanbanProvider} from './pages/Kanban/KanbanContext';
 
-function Example(props: any): any {
-  return [];
-}
+import Kanban from './pages/Kanban/Kanban';
+
+const fields = [
+  {
+    label: 'Name',
+    value: 'John Smith',
+    type: 'text',
+    id: uuidv4(),
+  }, {
+    label: 'Address',
+    value: '1 Broadway Avenue',
+    type: 'text',
+    id: uuidv4(),
+  }, {
+    label: 'Age',
+    value: 43,
+    type: 'number',
+    id: uuidv4()
+  }]
 
 const LoggingHOC = (id: string, WrappedComponent: React.FunctionComponent<any>) => (props: any) => {
   const log = () => {
@@ -46,35 +64,13 @@ const trackingId = uuidv4();
 
 function App() {
 
-  const fields = [
-    {
-      label: 'Name',
-      value: 'John Smith',
-      type: 'text',
-      id: uuidv4(),
-    }, {
-      label: 'Address',
-      value: '1 Broadway Avenue',
-      type: 'text',
-      id: uuidv4(),
-    }, {
-      label: 'Age',
-      value: 43,
-      type: 'number',
-      id: uuidv4()
-    }]
-
   const callback = (name: string, address: string, age: number) => {
     console.log('Send to server:', name, address, age);
   }
 
-  const Button3 = toggleOnAlt('showForm', PrimaryButton);
   const Form2 = toggleOnAlt('showForm', Form);
-  const TrackedButton = TrackingHOC(Button);
-  const button = <TrackedButton text="This button is tracked" />
 
   const LoggedButton = LoggingHOC(trackingId, Button);
-
 
   const [toggle, setToggle] = useState(false);
 
@@ -82,19 +78,21 @@ function App() {
     setToggle(!toggle);
   }
 
+  
+
   return (
-    <div className="App">
-      <PrimaryButton text='Primary Button' />
-      <Button text='Normal Button' />
-      <Form2 fields={fields} onSubmit={callback} showLabels={true} />
-      <Button3 text="Optional Button" />
-      {button}
-      <h2>Light switch is {toggle ? 'on' : 'off'}</h2>
-      <LoggedButton text="This is a logged button" callback={() => callbackFunction()} />
-      <Example></Example>
-      <SignInForm />
-      <Counter max={3} step={1} />
-    </div>
+    <KanbanProvider>
+      <div className="App">
+        <Kanban />
+        <hr />
+        <Form2 fields={fields} onSubmit={callback} showLabels={true} />
+        <h2>Light switch is {toggle ? 'on' : 'off'}</h2>
+        <LoggedButton text="This is a logged button" callback={() => callbackFunction()} />
+        <SignInForm />
+        <hr />
+        <Todolist />
+      </div>
+    </KanbanProvider>
   );
 }
 
