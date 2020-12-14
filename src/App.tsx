@@ -7,7 +7,7 @@ import {v4 as uuidv4} from 'uuid';
 import {isFeatureOn} from './featureToggle'
 import SignInForm from './forms/SignInForm'
 import Todolist from './pages/TodoList';
-import NamesList from './pages/DataFetchingWithMiddleware/NamesList';
+import NamesList from './pages/DataFetchingWithRouting/NamesList';
 import Counter from './components/Counter';
 
 import {KanbanProvider} from './pages/Kanban/KanbanContext';
