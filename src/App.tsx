@@ -7,6 +7,7 @@ import {v4 as uuidv4} from 'uuid';
 import {isFeatureOn} from './featureToggle'
 import Todolist from './pages/TodoList';
 import NamesList from './pages/DataFetchingWithRouting/NamesList';
+import LoadProvider from './pages/ModelViewViewModel/LoadProvider'
 
 import {KanbanProvider} from './pages/Kanban/KanbanContext';
 import RegistrationForm from './pages/ManagingFormState/RegistrationForm';
@@ -86,6 +87,7 @@ function App() {
         <Form2 fields={fields} onSubmit={callback} showLabels={true} />
         <h2>Light switch is {toggle ? 'on' : 'off'}</h2>
         <LoggedButton text="This is a logged button" callback={() => callbackFunction()} />
+        <LoadProvider />
       </div>
     </KanbanProvider>
   );

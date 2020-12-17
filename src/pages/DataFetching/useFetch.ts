@@ -8,7 +8,6 @@ import {useState, useEffect} from 'react';
   before passing it back to the caller.
 */
 
-
 const defaultCallback = (response: any) => response;
 
 export const useFetch = (url: string, dataCallback = defaultCallback) => {
